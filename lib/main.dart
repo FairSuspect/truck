@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:truck/features/main/view/main_screen.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
 import 'features/sign_in/sign_in.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       home: ChangeNotifierProvider(
         create: (context) => SignInProvider(),
-        child: const SignInScreen(),
+        child: const MainScreen(),
       ),
     );
   }
