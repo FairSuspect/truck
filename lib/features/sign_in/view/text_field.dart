@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OutlinedTextField extends StatefulWidget {
-  const OutlinedTextField({Key? key, this.onSaved, required this.label})
+  const OutlinedTextField(
+      {Key? key, this.onSaved, required this.label, this.onChanged})
       : super(key: key);
   final ValueChanged<String?>? onSaved;
+  final ValueChanged<String?>? onChanged;
   final String label;
   @override
   State<OutlinedTextField> createState() => _OutlinedTextFieldState();
@@ -46,16 +48,19 @@ class _OutlinedTextFieldState extends State<OutlinedTextField> {
               child: TextFormField(
                 controller: _controller,
                 onSaved: widget.onSaved,
+                onChanged: widget.onChanged,
                 decoration: InputDecoration(
                   label: Text(widget.label),
                 ),
+                textInputAction: TextInputAction.next,
               ),
             ),
-            Flexible(
-              child: IconButton(
-                onPressed: _controller.clear,
-                icon: SvgPicture.asset('assets/icons/cancel.svg'),
-              ),
+            IconButton(
+              onPressed: () {
+                _controller.clear();
+                widget.onChanged?.call('');
+              },
+              icon: SvgPicture.asset('assets/icons/cancel.svg'),
             ),
           ],
         ),

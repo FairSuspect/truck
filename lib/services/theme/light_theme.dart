@@ -9,6 +9,7 @@ final lightTheme = ThemeData(
     border: InputBorder.none,
     focusColor: _focusBorderColor,
   ),
+  disabledColor: const Color(0xFFA0AAC6),
   scaffoldBackgroundColor: _backgroundColor,
   colorScheme: ColorScheme.fromSeed(seedColor: _primaryColor),
 );
