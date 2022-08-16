@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:truck/features/main/view/main_screen.dart';
+import 'package:truck/services/navigation.dart';
 
 class SignInProvider extends ChangeNotifier {
   String driverId = '';
@@ -27,6 +29,6 @@ class SignInProvider extends ChangeNotifier {
   VoidCallback? get onLogInPressed => buttonAvailable ? logIn : null;
 
   void logIn() {
-    print("Logging in with $driverId and $truckId");
+    Navigation().key.currentState!.pushNamed(MainScreen.routeName);
   }
 }

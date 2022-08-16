@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/view/option_tile.dart';
+import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/services/navigation.dart';
 
 import 'nav_bar.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   static const String routeName = '/';
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,25 +30,46 @@ class MainScreen extends StatelessWidget {
                   SvgPicture.asset('assets/icons/door_arrow_right_outline.svg'))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: OptionTile(onTap: () {
-                Navigation()
-                    .key
-                    .currentState!
-                    .pushNamed(DocOptionScreen.routeName);
-              }),
-            ),
-          ],
-        ),
+      body: IndexedStack(
+        index: currentIndex,
+        children: const [
+          _MainScreenPage(),
+          QrCodePage(),
+        ],
       ),
       bottomNavigationBar: MainNavBar(
-        initialIndex: 0,
-        onNavBarTap: (int value) {},
+        initialIndex: currentIndex,
+        onNavBarTap: (int value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class _MainScreenPage extends StatelessWidget {
+  const _MainScreenPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6.0),
+            child: OptionTile(onTap: () {
+              Navigation()
+                  .key
+                  .currentState!
+                  .pushNamed(DocOptionScreen.routeName);
+            }),
+          ),
+        ],
       ),
     );
   }

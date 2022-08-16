@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       navigatorKey: Navigation().key,
       theme: lightTheme,
+      initialRoute: SignInScreen.routeName,
       onGenerateRoute: (RouteSettings settings) {
-        WidgetBuilder builder;
+        late final WidgetBuilder builder;
         switch (settings.name) {
           case DocOptionScreen.routeName:
             builder = (context) => Provider(
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
                 child: const DocOptionScreen());
             break;
           case SignInScreen.routeName:
-            builder = (context) => const SignInScreen();
+            builder = (context) => ChangeNotifierProvider(
+                create: (context) => SignInProvider(),
+                child: const SignInScreen());
             break;
           case MainScreen.routeName:
           default:
@@ -40,10 +43,6 @@ class MyApp extends StatelessWidget {
 
         return MaterialPageRoute(builder: builder);
       },
-      home: ChangeNotifierProvider(
-        create: (context) => SignInProvider(),
-        child: const MainScreen(),
-      ),
     );
   }
 }
