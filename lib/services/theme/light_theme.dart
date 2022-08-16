@@ -22,7 +22,7 @@ final lightTheme = ThemeData(
       secondary: const Color(0xFFF7990D)),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       fontSize: 16,
       height: 24 / 16,
     ),
