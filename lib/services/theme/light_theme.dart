@@ -17,10 +17,15 @@ final lightTheme = ThemeData(
     titleTextStyle: _headlineLargeTextStyle,
   ),
   colorScheme: ColorScheme.fromSeed(
-    seedColor: _primaryColor,
-    onBackground: _primaryTextColor,
-  ),
+      seedColor: _primaryColor,
+      onBackground: _primaryTextColor,
+      secondary: const Color(0xFFF7990D)),
   textTheme: const TextTheme(
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+      height: 24 / 16,
+    ),
     bodyMedium: TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 12,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:truck/features/main/view/option_tile.dart';
 
 import 'nav_bar.dart';
 
@@ -17,6 +18,25 @@ class MainScreen extends StatelessWidget {
               icon:
                   SvgPicture.asset('assets/icons/door_arrow_right_outline.svg'))
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: OptionTile(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: OptionTile(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: OptionTile(),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: MainNavBar(
         initialIndex: 0,
