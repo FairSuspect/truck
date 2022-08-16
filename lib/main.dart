@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:truck/features/doc_option/provider/provider.dart';
+import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/view/main_screen.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
 import 'features/sign_in/sign_in.dart';
+import 'services/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +20,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      navigatorKey: Navigation().key,
       theme: lightTheme,
+      onGenerateRoute: (RouteSettings settings) {
+        WidgetBuilder builder;
+        switch (settings.name) {
+          case DocOptionScreen.routeName:
+            builder = (context) => Provider(
+                create: (context) => DocOptionProvider(),
+                child: const DocOptionScreen());
+            break;
+          case SignInScreen.routeName:
+            builder = (context) => const SignInScreen();
+            break;
+          case MainScreen.routeName:
+          default:
+            builder = (context) => const MainScreen();
+        }
+
+        return MaterialPageRoute(builder: builder);
+      },
       home: ChangeNotifierProvider(
         create: (context) => SignInProvider(),
         child: const MainScreen(),

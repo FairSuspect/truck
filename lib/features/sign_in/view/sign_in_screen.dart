@@ -9,6 +9,7 @@ import 'text_field.dart';
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
+  static const String routeName = 'auth';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

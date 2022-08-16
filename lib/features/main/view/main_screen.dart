@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/view/option_tile.dart';
+import 'package:truck/services/navigation.dart';
 
 import 'nav_bar.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
+
+  static const String routeName = '/';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _AppBarTitle(),
+        title: const _AppBarTitle(),
         actions: [
           IconButton(
               onPressed: () {},
@@ -25,15 +29,12 @@ class MainScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: OptionTile(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: OptionTile(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: OptionTile(),
+              child: OptionTile(onTap: () {
+                Navigation()
+                    .key
+                    .currentState!
+                    .pushNamed(DocOptionScreen.routeName);
+              }),
             ),
           ],
         ),

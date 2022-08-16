@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OptionTile extends StatelessWidget {
-  const OptionTile({Key? key}) : super(key: key);
-
+  const OptionTile({Key? key, required this.onTap}) : super(key: key);
+  final GestureTapCallback onTap;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        color: theme.cardColor,
-      ),
-      child: GestureDetector(
-        onTap: () {},
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+          color: theme.cardColor,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
