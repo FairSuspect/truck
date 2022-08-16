@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
+  // useMaterial3: true,
   primaryColor: _primaryColor,
   backgroundColor: _backgroundColor,
   cardColor: _backgroundAccentColor,
@@ -16,6 +17,12 @@ final lightTheme = ThemeData(
     elevation: 0,
     titleTextStyle: _headlineLargeTextStyle,
   ),
+  textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(14.0))),
+  )),
+
   colorScheme: ColorScheme.fromSeed(
       seedColor: _primaryColor,
       onBackground: _primaryTextColor,
@@ -32,6 +39,13 @@ final lightTheme = ThemeData(
       height: 20 / 12,
     ),
     headlineLarge: _headlineLargeTextStyle,
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    type: BottomNavigationBarType.fixed,
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
+    backgroundColor: _backgroundColor,
+    elevation: 0,
   ),
 );
 

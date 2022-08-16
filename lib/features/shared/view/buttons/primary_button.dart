@@ -19,8 +19,6 @@ class PrimaryButton extends StatelessWidget {
             onPressed: onPressed,
             style: TextButton.styleFrom(
               primary: Theme.of(context).backgroundColor,
-
-              // surfaceTintColor: Theme.of(context).backgroundColor,
             ).copyWith(
                 foregroundColor:
                     MaterialStateProperty.all(theme.backgroundColor)),

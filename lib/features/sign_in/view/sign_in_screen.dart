@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:truck/features/shared/view/primary_button.dart';
+import 'package:truck/features/shared/view/buttons/primary_button.dart';
 import 'package:truck/features/sign_in/provider/provider.dart';
 
 import 'logo.dart';

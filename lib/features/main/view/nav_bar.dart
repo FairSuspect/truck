@@ -33,9 +33,6 @@ class _MainNavBarState extends State<MainNavBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: currentIndex,
         onTap: (index) {
           widget.onNavBarTap(index);
