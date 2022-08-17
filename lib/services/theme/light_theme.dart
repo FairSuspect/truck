@@ -24,6 +24,7 @@ final lightTheme = ThemeData(
   )),
 
   colorScheme: ColorScheme.fromSeed(
+      onSecondary: _secondaryTextColor,
       seedColor: _primaryColor,
       onBackground: _primaryTextColor,
       secondary: const Color(0xFFF7990D)),
@@ -40,6 +41,7 @@ final lightTheme = ThemeData(
     ),
     headlineLarge: _headlineLargeTextStyle,
   ),
+  fontFamily: "Gilroy",
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     showSelectedLabels: false,
@@ -54,6 +56,7 @@ const Color _backgroundColor = Color(0xFFFFFFFF);
 const Color _backgroundAccentColor = Color(0xFFF7FAFC);
 
 const Color _primaryTextColor = Color(0xFF132A40);
+const Color _secondaryTextColor = Color(0xFF4E5467);
 
 const Color _focusBorderColor = Color(0xFFE0E4ED);
 
