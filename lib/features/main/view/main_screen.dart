@@ -12,6 +12,7 @@ import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
 import 'package:truck/services/navigation.dart';
 
 import '../provider/provider.dart';
+import '../provider/user_provider.dart';
 import 'nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -109,26 +110,30 @@ class _AppBarTitle extends StatelessWidget {
     final theme = Theme.of(context);
     final subtitleStyle =
         theme.textTheme.bodyMedium?.copyWith(color: theme.disabledColor);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Driver Name",
-        ),
-        Row(
-          children: [
-            Text(
-              "Driver #000000",
-              style: subtitleStyle,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              "Truck #000000",
-              style: subtitleStyle,
-            )
-          ],
-        )
-      ],
-    );
+    return Consumer<UserProvider>(builder: (context, controller, child) {
+      return controller.isLoading
+          ? const Text('...')
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.user.name,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Driver #${controller.user.driverId}",
+                      style: subtitleStyle,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      "Truck #${controller.user.truckId}",
+                      style: subtitleStyle,
+                    )
+                  ],
+                )
+              ],
+            );
+    });
   }
 }
