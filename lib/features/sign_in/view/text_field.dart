@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OutlinedTextField extends StatefulWidget {
-  const OutlinedTextField(
-      {Key? key, this.onSaved, required this.label, this.onChanged})
-      : super(key: key);
+  const OutlinedTextField({
+    super.key,
+    this.onSaved,
+    required this.label,
+    this.onChanged,
+    this.keyboardType = TextInputType.number,
+  });
   final ValueChanged<String?>? onSaved;
   final ValueChanged<String?>? onChanged;
   final String label;
+  final TextInputType keyboardType;
   @override
   State<OutlinedTextField> createState() => _OutlinedTextFieldState();
 }
@@ -46,6 +51,7 @@ class _OutlinedTextFieldState extends State<OutlinedTextField> {
           children: [
             Expanded(
               child: TextFormField(
+                keyboardType: widget.keyboardType,
                 controller: _controller,
                 onSaved: widget.onSaved,
                 onChanged: widget.onChanged,
