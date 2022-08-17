@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/message_container.dart';
 import 'package:truck/features/qr_code/view/qr_code_body.dart';
 import 'package:truck/features/qr_code/view/qr_code_container.dart';
@@ -21,16 +23,21 @@ class QrCodePage extends StatelessWidget {
             padding: const EdgeInsets.all(34.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                QrCodeBody(),
-                SizedBox(height: 82),
-                MessageContainer(message: "Expires in 15 min")
+              children: [
+                const QrCodeBody(),
+                const SizedBox(height: 82),
+                Consumer<QrCodeProvider>(builder: (context, controller, child) {
+                  return MessageContainer(
+                      message: controller.isLoading
+                          ? "..."
+                          : "Expires in ${controller.minutesRemaining} min");
+                })
               ],
             ),
           )),
           const Spacer(),
           SecondaryButton(
-              onPressed: () {},
+              onPressed: Provider.of<QrCodeProvider>(context).getCode,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
