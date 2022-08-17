@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/view/option_tile.dart';
+import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
+import 'package:truck/features/oil_status/view/oil_status_page.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
+import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
 import 'package:truck/services/navigation.dart';
 
 import 'nav_bar.dart';
@@ -22,7 +25,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const _AppBarTitle(),
+        title: IndexedStack(
+          index: currentIndex,
+          children: const [
+            _AppBarTitle(),
+            QrCodeAppBarTitle(),
+            OilStatusAppBarTitle(),
+          ],
+        ),
         actions: [
           IconButton(
               onPressed: () {},
@@ -35,6 +45,7 @@ class _MainScreenState extends State<MainScreen> {
         children: const [
           _MainScreenPage(),
           QrCodePage(),
+          OilStatusPage(),
         ],
       ),
       bottomNavigationBar: MainNavBar(

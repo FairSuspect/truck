@@ -28,7 +28,7 @@ class QrCodePage extends StatelessWidget {
               ],
             ),
           )),
-          Spacer(),
+          const Spacer(),
           SecondaryButton(
               onPressed: () {},
               child: Row(
