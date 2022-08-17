@@ -1,11 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:truck/features/main/models/option.dart';
 
 class OptionTile extends StatelessWidget {
-  const OptionTile({Key? key, required this.onTap}) : super(key: key);
+  const OptionTile({
+    super.key,
+    required this.option,
+    required this.onTap,
+  });
   final GestureTapCallback onTap;
+  final Option option;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -27,18 +32,20 @@ class OptionTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Option 1",
+                      option.name,
                       style: theme.textTheme.bodyLarge,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '08/08/2022',
+                      DateFormat.yMd().format(option.deadline),
                       style: theme.textTheme.bodySmall,
                     ),
                     const SizedBox(height: 4),
                     _DeadlineProgress(
-                      progress: Random().nextInt(150),
-                      total: 100,
+                      progress:
+                          DateTime.now().difference(option.dateCreated).inDays,
+                      total:
+                          option.deadline.difference(option.dateCreated).inDays,
                     )
                   ],
                 ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:truck/features/doc_option/view/doc_option_screen.dart';
+import 'package:truck/features/main/provider/option_provider.dart';
+import 'package:truck/features/main/view/error_card.dart';
 import 'package:truck/features/main/view/option_tile.dart';
 import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
 import 'package:truck/features/oil_status/view/oil_status_page.dart';
@@ -72,19 +74,27 @@ class _MainScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6.0),
-            child: OptionTile(onTap: () {
-              Navigation()
-                  .key
-                  .currentState!
-                  .pushNamed(DocOptionScreen.routeName);
-            }),
-          ),
-        ],
-      ),
+      child: Consumer<OptionProvider>(builder: (context, controller, child) {
+        return controller.hasError
+            ? const Center(child: ErrorCard())
+            : controller.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: controller.options.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: OptionTile(
+                        onTap: () {
+                          Navigation()
+                              .key
+                              .currentState!
+                              .pushNamed(DocOptionScreen.routeName);
+                        },
+                        option: controller.options[index],
+                      ),
+                    ),
+                  );
+      }),
     );
   }
 }
