@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truck/features/doc_option/provider/provider.dart';
 import 'package:truck/features/doc_option/view/doc_option_screen.dart';
+import 'package:truck/features/main/provider/provider.dart';
 import 'package:truck/features/main/view/main_screen.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
@@ -38,7 +39,9 @@ class MyApp extends StatelessWidget {
             break;
           case MainScreen.routeName:
           default:
-            builder = (context) => const MainScreen();
+            builder = (context) => MultiProvider(providers: [
+                  Provider(create: (context) => MainProvider()),
+                ], child: const MainScreen());
         }
 
         return MaterialPageRoute(builder: builder);

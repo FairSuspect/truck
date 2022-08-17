@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/view/option_tile.dart';
 import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
@@ -8,6 +9,7 @@ import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
 import 'package:truck/services/navigation.dart';
 
+import '../provider/provider.dart';
 import 'nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -35,7 +37,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed:
+                  Provider.of<MainProvider>(context, listen: false).logOut,
               icon:
                   SvgPicture.asset('assets/icons/door_arrow_right_outline.svg'))
         ],
