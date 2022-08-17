@@ -21,8 +21,12 @@ class SignInScreen extends StatelessWidget {
             children: [
               const Logo(),
               const SizedBox(height: 66),
-              const Align(
-                  alignment: Alignment.centerLeft, child: Text("Log in")),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Log in",
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  )),
               const SizedBox(height: 32),
               OutlinedTextField(
                 onChanged: Provider.of<SignInProvider>(context, listen: false)
