@@ -17,8 +17,11 @@ import 'package:truck/services/theme/light_theme.dart';
 import 'features/qr_code/services/mock_service.dart';
 import 'features/sign_in/sign_in.dart';
 import 'services/navigation.dart';
+import 'services/notifications.dart' as notifications;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  notifications.Notifications().init();
   runApp(const MyApp());
 }
 

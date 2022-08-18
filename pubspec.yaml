@@ -41,6 +41,8 @@ dependencies:
   intl: ^0.17.0
   qr_flutter: ^4.0.0
   dio: ^4.0.6
+  flutter_local_notifications: ^9.8.0+1
+  rxdart: ^0.27.5
 
 dev_dependencies:
   flutter_test:

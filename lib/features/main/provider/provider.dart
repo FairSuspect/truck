@@ -1,5 +1,6 @@
 import 'package:truck/features/sign_in/view/view.dart';
 import 'package:truck/services/navigation.dart';
+import 'package:truck/services/notifications.dart' as notifications;
 
 class MainProvider {
   void logOut() {
@@ -8,5 +9,11 @@ class MainProvider {
         .currentState!
         .popUntil((route) => !Navigation().key.currentState!.canPop());
     Navigation().key.currentState!.pushReplacementNamed(SignInScreen.routeName);
+
+    disableNotifications();
+  }
+
+  void disableNotifications() {
+    notifications.flutterLocalNotificationsPlugin.cancelAll();
   }
 }
