@@ -8,6 +8,8 @@ import 'package:truck/features/main/provider/provider.dart';
 import 'package:truck/features/main/services/option_service/mock_service.dart';
 import 'package:truck/features/main/services/user_service/mock_service.dart';
 import 'package:truck/features/main/view/main_screen.dart';
+import 'package:truck/features/oil_status/provider/provider.dart';
+import 'package:truck/features/oil_status/service/mock_service.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/sign_in/services/auth_service/mock_service.dart';
 import 'package:truck/services/theme/light_theme.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
                       create: (context) => UserProvider(MockUserService())),
                   ChangeNotifierProvider(
                       create: (context) => QrCodeProvider(QrMockService())),
+                  Provider(
+                      create: (context) => OilStatusProvider(MockOilService())),
                   Provider(create: (context) => MainProvider()),
                 ], child: const MainScreen());
         }

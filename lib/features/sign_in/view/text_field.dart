@@ -8,9 +8,11 @@ class OutlinedTextField extends StatefulWidget {
     required this.label,
     this.onChanged,
     this.keyboardType = TextInputType.number,
+    this.controller,
   });
   final ValueChanged<String?>? onSaved;
   final ValueChanged<String?>? onChanged;
+  final TextEditingController? controller;
   final String label;
   final TextInputType keyboardType;
   @override
@@ -23,7 +25,7 @@ class _OutlinedTextFieldState extends State<OutlinedTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = widget.controller ?? TextEditingController();
   }
 
   void onFocusChanged(bool gained) {
