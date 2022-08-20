@@ -18,6 +18,7 @@ class OptionProvider extends ChangeNotifier {
     notifyListeners();
     try {
       options = await service.getAll();
+      filter = options.keys.first;
     } catch (e) {
       isLoading = false;
       hasError = true;
@@ -26,13 +27,22 @@ class OptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Option> _options = [];
+  String filter = '';
+  Map<String, List<Option>> _options = {};
 
-  List<Option> get options => _options;
+  Map<String, List<Option>> get options => _options;
 
-  set options(List<Option> options) {
+  set options(Map<String, List<Option>> options) {
     _options = options;
     isLoading = false;
     hasError = false;
   }
+
+  void onFilterSelected(String value) {
+    filter = value;
+    notifyListeners();
+  }
+
+  List<String> get filters => options.keys.toList();
+  List<Option> get filteredOptions => options[filter] ?? [];
 }

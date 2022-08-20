@@ -15,7 +15,7 @@ const _names = [
 
 class MockOptionService implements OptionService {
   @override
-  Future<List<Option>> getAll() async {
+  Future<Map<String, List<Option>>> getAll() async {
     await Future.delayed(const Duration(seconds: 1));
     if (Random().nextBool()) {
       throw Exception();
@@ -28,7 +28,15 @@ class MockOptionService implements OptionService {
         dateCreated: DateTime.now().add(Duration(days: -index * 10)),
       ),
     );
-
-    return array;
+    const fields = ["Registration", "Insuranse", "Permits", "Agreements"];
+    Map<String, List<Option>> map = {};
+    var index = fields.length;
+    for (var field in fields) {
+      for (var i = 0; i < array.length - index; i++) {
+        map[field] = array.sublist(0, i);
+      }
+      --index;
+    }
+    return map;
   }
 }

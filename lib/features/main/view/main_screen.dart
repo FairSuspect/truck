@@ -80,22 +80,82 @@ class _MainScreenPage extends StatelessWidget {
             ? const Center(child: ErrorCard())
             : controller.isLoading
                 ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: controller.options.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: OptionTile(
-                        onTap: () {
-                          Navigation()
-                              .key
-                              .currentState!
-                              .pushNamed(DocOptionScreen.routeName);
-                        },
-                        option: controller.options[index],
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 46,
+                        child: ListView.builder(
+                          itemCount: controller.filters.length,
+                          itemBuilder: (context, index) => _FilterChip(
+                            title: controller.filters[index],
+                            isSelected:
+                                controller.filters[index] == controller.filter,
+                            onTap: controller.onFilterSelected,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: controller.filteredOptions.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            child: OptionTile(
+                              onTap: () {
+                                Navigation()
+                                    .key
+                                    .currentState!
+                                    .pushNamed(DocOptionScreen.routeName);
+                              },
+                              option: controller.filteredOptions[index],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
       }),
+    );
+  }
+}
+
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({
+    super.key,
+    required this.title,
+    this.isSelected = false,
+    this.onTap,
+  });
+  final String title;
+  final bool isSelected;
+  final ValueChanged<String>? onTap;
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: GestureDetector(
+        onTap: () {
+          onTap?.call(title);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          decoration: BoxDecoration(
+            color: isSelected ? theme.cardColor : const Color(0xFFF7F8FA),
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          ),
+          child: Center(
+              child: Text(
+            title,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: isSelected
+                  ? const Color(0xFF4E5467)
+                  : const Color(0xFF858DA6),
+            ),
+          )),
+        ),
+      ),
     );
   }
 }
