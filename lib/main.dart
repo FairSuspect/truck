@@ -14,11 +14,16 @@ import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/sign_in/services/auth_service/mock_service.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
+import 'features/main/services/option_service/option_service.dart';
+import 'features/main/services/user_service/remote_service.dart';
 import 'features/qr_code/services/mock_service.dart';
+import 'features/sign_in/services/auth_service/auth_service.dart';
 import 'features/sign_in/sign_in.dart';
 import 'services/navigation.dart';
+import 'services/env.dart' as env;
 
 void main() {
+  env.Env().init();
   runApp(const MyApp());
 }
 
@@ -43,16 +48,17 @@ class MyApp extends StatelessWidget {
             break;
           case SignInScreen.routeName:
             builder = (context) => ChangeNotifierProvider(
-                create: (context) => SignInProvider(MockAuthService()),
+                create: (context) => SignInProvider(RemoteAuthService()),
                 child: const SignInScreen());
             break;
           case MainScreen.routeName:
           default:
             builder = (context) => MultiProvider(providers: [
                   ChangeNotifierProvider(
-                      create: (context) => OptionProvider(MockOptionService())),
+                      create: (context) =>
+                          OptionProvider(RemoteOptionService())),
                   ChangeNotifierProvider(
-                      create: (context) => UserProvider(MockUserService())),
+                      create: (context) => UserProvider(RemoteUserService())),
                   ChangeNotifierProvider(
                       create: (context) => QrCodeProvider(QrMockService())),
                   Provider(

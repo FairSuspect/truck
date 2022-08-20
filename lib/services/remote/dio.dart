@@ -1,11 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:truck/services/remote/interceptors.dart';
 
-class DioService {
-  final Dio dio = Dio();
+class DioFactory {
+  DioFactory._();
 
-  static final DioService _instance = DioService._();
-
-  DioService._();
-
-  factory DioService() => _instance;
+  static Dio createDio() {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: dotenv.env["DOMAIN"]!,
+        receiveTimeout: 15000, // 15 seconds
+        connectTimeout: 15000,
+        sendTimeout: 15000,
+      ),
+    );
+    dio.interceptors.add(AppInterceptors(dio));
+    return dio;
+  }
 }

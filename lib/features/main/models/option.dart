@@ -6,7 +6,8 @@ part 'option.freezed.dart';
 class Option with _$Option {
   const factory Option({
     required String name,
-    required DateTime deadline,
-    required DateTime dateCreated,
+    required DateTime? deadline,
+    required DateTime? dateCreated,
+    required String key,
   }) = _Option;
 }

@@ -26,6 +26,7 @@ class MockOptionService implements OptionService {
         name: _names[index],
         deadline: DateTime.now().add(Duration(days: (2 - index) * 10)),
         dateCreated: DateTime.now().add(Duration(days: -index * 10)),
+        key: _names[index],
       ),
     );
     const fields = ["Registration", "Insuranse", "Permits", "Agreements"];
@@ -38,5 +39,11 @@ class MockOptionService implements OptionService {
       --index;
     }
     return map;
+  }
+
+  @override
+  Future<String> getFile(String query) {
+    // TODO: implement getFile
+    throw UnimplementedError();
   }
 }

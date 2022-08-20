@@ -177,17 +177,17 @@ class _AppBarTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.user.name,
+                  controller.user.username,
                 ),
                 Row(
                   children: [
                     Text(
-                      "Driver #${controller.user.driverId}",
+                      "VIN ${controller.user.email}",
                       style: subtitleStyle,
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      "Truck #${controller.user.truckId}",
+                      "Truck #${controller.user.username}",
                       style: subtitleStyle,
                     )
                   ],

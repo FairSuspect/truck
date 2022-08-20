@@ -36,17 +36,21 @@ class OptionTile extends StatelessWidget {
                       style: theme.textTheme.bodyLarge,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      DateFormat.yMd().format(option.deadline),
-                      style: theme.textTheme.bodySmall,
-                    ),
+                    if (option.dateCreated != null)
+                      Text(
+                        DateFormat.yMd().format(option.deadline!),
+                        style: theme.textTheme.bodySmall,
+                      ),
                     const SizedBox(height: 4),
-                    _DeadlineProgress(
-                      progress:
-                          DateTime.now().difference(option.dateCreated).inDays,
-                      total:
-                          option.deadline.difference(option.dateCreated).inDays,
-                    )
+                    if (option.deadline != null && option.dateCreated != null)
+                      _DeadlineProgress(
+                        progress: DateTime.now()
+                            .difference(option.dateCreated!)
+                            .inDays,
+                        total: option.deadline!
+                            .difference(option.dateCreated!)
+                            .inDays,
+                      )
                   ],
                 ),
               ),
