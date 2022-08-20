@@ -9,6 +9,8 @@ import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
 import 'package:truck/features/oil_status/view/oil_status_page.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
+import 'package:truck/features/shared/view/snackbars.dart';
+import 'package:truck/services/navigation.dart';
 
 import '../provider/provider.dart';
 import '../provider/user_provider.dart';
@@ -25,6 +27,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

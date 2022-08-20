@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class Navigation {
   Navigation._();
@@ -8,4 +8,5 @@ class Navigation {
   factory Navigation() => _instance;
 
   GlobalKey<NavigatorState> key = GlobalKey();
+  GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey();
 }

@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,13 +9,13 @@ import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/provider/user_provider.dart';
 import 'package:truck/features/main/provider/option_provider.dart';
 import 'package:truck/features/main/provider/provider.dart';
-import 'package:truck/features/main/services/option_service/stub_service.dart';
 import 'package:truck/features/main/view/main_screen.dart';
 import 'package:truck/features/oil_status/provider/provider.dart';
 import 'package:truck/features/oil_status/service/mock_service.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
+import 'features/main/services/option_service/option_service.dart';
 import 'features/main/services/user_service/remote_service.dart';
 import 'features/qr_code/services/mock_service.dart';
 import 'features/sign_in/services/auth_service/auth_service.dart';
@@ -27,6 +29,11 @@ Future<void> main() async {
   Logger.root.onRecord.listen((record) {
     print('[${record.loggerName}] (${record.time}): ${record.message}');
   });
+  // Plugin must be initialized before using
+  await FlutterDownloader.initialize(
+    debug: kDebugMode,
+  );
+
   final hasToken = await checkAuth();
   final initialRoute = hasToken ? MainScreen.routeName : SignInScreen.routeName;
   final log = Logger("Splash");
@@ -53,6 +60,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Truck documents',
       navigatorKey: Navigation().key,
+      scaffoldMessengerKey: Navigation().scaffoldKey,
       theme: lightTheme,
       initialRoute: initialRoute,
       onGenerateRoute: (RouteSettings settings) {
@@ -72,7 +80,8 @@ class MyApp extends StatelessWidget {
           default:
             builder = (context) => MultiProvider(providers: [
                   ChangeNotifierProvider(
-                      create: (context) => OptionProvider(StubOptionService())),
+                      create: (context) =>
+                          OptionProvider(RemoteOptionService())),
                   ChangeNotifierProvider(
                       create: (context) => UserProvider(RemoteUserService())),
                   ChangeNotifierProvider(

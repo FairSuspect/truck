@@ -116,6 +116,7 @@ class RemoteOptionService implements OptionService {
 
   @override
   Future<String> getFile(String query) async {
+    return 'https://roskazna.gov.ru/anticorruption/doc/prikaz_k.pdf';
     final response = await Api().dio.get(
       '/driver/get_truck_file/',
       queryParameters: {

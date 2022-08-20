@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:truck/features/main/models/option.dart';
+import 'package:truck/features/main/provider/option_provider.dart';
 
 class OptionTile extends StatelessWidget {
   const OptionTile({
@@ -25,7 +27,10 @@ class OptionTile extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              const DocumentIcon(),
+              Consumer<OptionProvider>(builder: (context, controller, child) {
+                final progress = controller.progresses[option.key];
+                return DocumentIcon(progress: progress);
+              }),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -136,8 +141,8 @@ class _ProgressBar extends StatelessWidget {
 }
 
 class DocumentIcon extends StatelessWidget {
-  const DocumentIcon({Key? key}) : super(key: key);
-
+  const DocumentIcon({Key? key, this.progress}) : super(key: key);
+  final double? progress;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -147,7 +152,9 @@ class DocumentIcon extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           color: theme.primaryColor.withOpacity(.08),
         ),
-        child:
-            SvgPicture.asset('assets/icons/document_outline.svg', height: 56));
+        child: progress != null
+            ? CircularProgressIndicator(value: progress)
+            : SvgPicture.asset('assets/icons/document_outline.svg',
+                height: 56));
   }
 }
