@@ -9,7 +9,6 @@ import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
 import 'package:truck/features/oil_status/view/oil_status_page.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
-import 'package:truck/services/navigation.dart';
 
 import '../provider/provider.dart';
 import '../provider/user_provider.dart';
@@ -103,10 +102,8 @@ class _MainScreenPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 6.0),
                             child: OptionTile(
                               onTap: () {
-                                Navigation()
-                                    .key
-                                    .currentState!
-                                    .pushNamed(DocOptionScreen.routeName);
+                                controller.onOptionTap(
+                                    controller.filteredOptions[index].key);
                               },
                               option: controller.filteredOptions[index],
                             ),
@@ -177,17 +174,17 @@ class _AppBarTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.user.username,
+                  controller.user.driverName,
                 ),
                 Row(
                   children: [
                     Text(
-                      "VIN ${controller.user.email}",
+                      "VIN ${controller.user.vin}",
                       style: subtitleStyle,
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      "Truck #${controller.user.username}",
+                      "Truck #${controller.user.truckNumber}",
                       style: subtitleStyle,
                     )
                   ],

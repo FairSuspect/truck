@@ -1,27 +1,51 @@
+import 'dart:math';
+
 import 'package:truck/features/main/models/option.dart';
-import 'package:truck/features/main/services/option_service/option_service.dart';
-import 'package:truck/services/remote/api.dart';
 
-class RemoteOptionService implements OptionService {
-  static const _names = [
-    'truck_registration_file',
-    'truck_inspection_file',
-    'physical_damage_file',
-    "NY_file",
-    "KY_file",
-    "NM_file",
-    "OR_file",
-    'leaser_and_borrower_file',
-    'driver_and_company_file',
-    'random_drug_test_expiration_file',
-  ];
+import 'abscract.dart';
 
+const _names = [
+  'Insurance',
+  'Fuel card',
+  'Driver License',
+  "Go-Throw permission",
+  "Job permission",
+  "VIN"
+];
+
+class StubOptionService implements OptionService {
   @override
   Future<Map<String, List<Option>>> getAll() async {
-    final response = await Api().dio.get(
-          '/driver/get_current_truck/',
-        );
-    final data = response.data;
+    await Future.delayed(const Duration(seconds: 1));
+    if (Random().nextBool()) {
+      throw Exception();
+    }
+    const data = {
+      "company_email": "string",
+      "truck_number": "string",
+      "truck_registration_file": "2022-08-20T12:58:19.322Z",
+      "vin": "string",
+      "license_expiration": "2022-08-20T12:58:19.322Z",
+      "year": "string",
+      "truck_inspection_file": "2022-08-20T12:58:19.322Z",
+      "truck_inspection_expiration": "2022-08-20T12:58:19.322Z",
+      "phycisal_damage_file": "2022-08-20T12:58:19.322Z",
+      "physical_damage_expiration": "2022-08-20T12:58:19.322Z",
+      "NY": "2022-08-20T12:58:19.322Z",
+      "NY_file": "2022-08-20T12:58:19.322Z",
+      "KY": "2022-08-20T12:58:19.322Z",
+      "KY_file": "2022-08-20T12:58:19.322Z",
+      "NM": "2022-08-20T12:58:19.322Z",
+      "NM_file": "2022-08-20T12:58:19.322Z",
+      "OR": "2022-08-20T12:58:19.322Z",
+      "OR_file": "2022-08-20T12:58:19.322Z",
+      "leaser_and_borrower_file": "2022-08-20T12:58:19.322Z",
+      "driver_and_company_file": "2022-08-20T12:58:19.322Z",
+      "random_drug_test_exparation": "2022-08-20T12:58:19.322Z",
+      "random_drug_test_exparation_file": "2022-08-20T12:58:19.322Z",
+      "driver_password": "string",
+      "driver_name": "string"
+    };
     final DateTime? truckRegistration =
         DateTime.tryParse(data['truck_registration_file'] ?? '');
     final DateTime? truckRegistrationExpiration =
@@ -115,13 +139,8 @@ class RemoteOptionService implements OptionService {
   }
 
   @override
-  Future<String> getFile(String query) async {
-    final response = await Api().dio.get(
-      '/driver/get_truck_file/',
-      queryParameters: {
-        'filename': query,
-      },
-    );
-    return response.data;
+  Future<String> getFile(String query) {
+    // TODO: implement getFile
+    throw UnimplementedError();
   }
 }

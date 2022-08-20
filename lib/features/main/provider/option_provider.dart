@@ -45,4 +45,6 @@ class OptionProvider extends ChangeNotifier {
 
   List<String> get filters => options.keys.toList();
   List<Option> get filteredOptions => options[filter] ?? [];
+
+  void onOptionTap(String key) {}
 }

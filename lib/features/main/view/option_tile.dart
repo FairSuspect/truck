@@ -64,10 +64,10 @@ class OptionTile extends StatelessWidget {
 
 class _DeadlineProgress extends StatelessWidget {
   const _DeadlineProgress({
-    Key? key,
+    super.key,
     required this.progress,
     required this.total,
-  }) : super(key: key);
+  });
   final int progress;
   final int total;
 
@@ -77,11 +77,12 @@ class _DeadlineProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final double barProgress = progress == total ? 1 : progress / total;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _ProgressBar(
-          progress: progress / total,
+          progress: barProgress,
         ),
         const SizedBox(width: 16),
         overdue
@@ -119,7 +120,7 @@ class _ProgressBar extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(
               color: theme.primaryColor.withOpacity(.08),
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
           width: width,
         ),
         Container(
@@ -127,7 +128,7 @@ class _ProgressBar extends StatelessWidget {
           width: progressWidth > width ? width : progressWidth,
           decoration: BoxDecoration(
               color: overdue ? theme.colorScheme.secondary : theme.primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
         ),
       ],
     );

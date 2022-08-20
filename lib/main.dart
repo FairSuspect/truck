@@ -5,7 +5,7 @@ import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/provider/user_provider.dart';
 import 'package:truck/features/main/provider/option_provider.dart';
 import 'package:truck/features/main/provider/provider.dart';
-import 'package:truck/features/main/services/option_service/mock_service.dart';
+import 'package:truck/features/main/services/option_service/stub_service.dart';
 import 'package:truck/features/main/services/user_service/mock_service.dart';
 import 'package:truck/features/main/view/main_screen.dart';
 import 'package:truck/features/oil_status/provider/provider.dart';
@@ -55,8 +55,7 @@ class MyApp extends StatelessWidget {
           default:
             builder = (context) => MultiProvider(providers: [
                   ChangeNotifierProvider(
-                      create: (context) =>
-                          OptionProvider(RemoteOptionService())),
+                      create: (context) => OptionProvider(StubOptionService())),
                   ChangeNotifierProvider(
                       create: (context) => UserProvider(RemoteUserService())),
                   ChangeNotifierProvider(
