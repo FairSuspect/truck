@@ -12,6 +12,10 @@ class AppInterceptors extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
+    final logger = Logger('Dio');
+
+    logger.log(Level.INFO,
+        "[${response.requestOptions.method}] ${response.requestOptions.path} — ${response.statusMessage} (${response.statusCode}) ");
     super.onResponse(response, handler);
   }
 
@@ -38,10 +42,8 @@ class AppInterceptors extends Interceptor {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final prefs = await SharedPreferences.getInstance();
-    final logger = Logger('Dio');
     options.headers['Cookie'] = prefs.getString('authToken');
-    logger.log(Level.INFO,
-        "Making ${options.method} request (${options.path}) with cookie: ${options.headers['Cookie']}");
+
     super.onRequest(options, handler);
   }
 }

@@ -14,8 +14,8 @@ import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
 import 'features/main/services/option_service/option_service.dart';
-import 'features/main/services/user_service/remote_service.dart';
-import 'features/qr_code/services/mock_service.dart';
+import 'features/main/services/user_service/mock_service.dart';
+import 'features/qr_code/services/qr_code_service.dart';
 import 'features/sign_in/services/auth_service/auth_service.dart';
 import 'features/sign_in/sign_in.dart';
 import 'services/navigation.dart';
@@ -80,9 +80,9 @@ class MyApp extends StatelessWidget {
                       create: (context) =>
                           OptionProvider(RemoteOptionService())),
                   ChangeNotifierProvider(
-                      create: (context) => UserProvider(RemoteUserService())),
+                      create: (context) => UserProvider(MockUserService())),
                   ChangeNotifierProvider(
-                      create: (context) => QrCodeProvider(QrMockService())),
+                      create: (context) => QrCodeProvider(RemoteQrService())),
                   Provider(
                       create: (context) => OilStatusProvider(MockOilService())),
                   Provider(create: (context) => MainProvider()),
