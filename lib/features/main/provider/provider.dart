@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck/features/sign_in/view/view.dart';
 import 'package:truck/services/navigation.dart';
+import 'package:truck/services/notifications.dart' as notifications;
 
 class MainProvider {
   void logOut() {
@@ -12,5 +13,11 @@ class MainProvider {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString('authToken', '');
     });
+
+    disableNotifications();
+  }
+
+  void disableNotifications() {
+    notifications.flutterLocalNotificationsPlugin.cancelAll();
   }
 }

@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +19,7 @@ import 'features/qr_code/services/mock_service.dart';
 import 'features/sign_in/services/auth_service/auth_service.dart';
 import 'features/sign_in/sign_in.dart';
 import 'services/navigation.dart';
+import 'services/notifications.dart' as notifications;
 import 'services/env.dart' as env;
 
 Future<void> main() async {
@@ -29,15 +28,13 @@ Future<void> main() async {
   Logger.root.onRecord.listen((record) {
     print('[${record.loggerName}] (${record.time}): ${record.message}');
   });
-  // Plugin must be initialized before using
-  await FlutterDownloader.initialize(
-    debug: kDebugMode,
-  );
 
   final hasToken = await checkAuth();
   final initialRoute = hasToken ? MainScreen.routeName : SignInScreen.routeName;
   final log = Logger("Splash");
   log.log(Level.INFO, 'Running up with initial route: $initialRoute');
+  WidgetsFlutterBinding.ensureInitialized();
+  notifications.Notifications().init();
   runApp(MyApp(
     initialRoute: initialRoute,
   ));
