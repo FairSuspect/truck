@@ -69,7 +69,6 @@ class OptionTile extends StatelessWidget {
 
 class _DeadlineProgress extends StatelessWidget {
   const _DeadlineProgress({
-    super.key,
     required this.progress,
     required this.total,
   });

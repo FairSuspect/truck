@@ -4,15 +4,6 @@ import 'package:truck/features/main/models/option.dart';
 
 import 'abscract.dart';
 
-const _names = [
-  'Insurance',
-  'Fuel card',
-  'Driver License',
-  "Go-Throw permission",
-  "Job permission",
-  "VIN"
-];
-
 class StubOptionService implements OptionService {
   @override
   Future<Map<String, List<Option>>> getAll() async {
@@ -31,12 +22,12 @@ class StubOptionService implements OptionService {
       "truck_inspection_expiration": "2022-08-20T12:58:19.322Z",
       "phycisal_damage_file": "2022-08-20T12:58:19.322Z",
       "physical_damage_expiration": "2022-08-20T12:58:19.322Z",
-      "NY": "2022-08-20T12:58:19.322Z",
-      "NY_file": "2022-08-20T12:58:19.322Z",
-      "KY": "2022-08-20T12:58:19.322Z",
-      "KY_file": "2022-08-20T12:58:19.322Z",
-      "NM": "2022-08-20T12:58:19.322Z",
-      "NM_file": "2022-08-20T12:58:19.322Z",
+      "NY_file": "2022-07-20T12:58:19.322Z",
+      "NY": "2022-08-29T12:58:19.322Z",
+      "KY_file": "2022-08-14T12:58:19.322Z",
+      "KY": "2022-08-19T12:58:19.322Z",
+      "NM_file": "2022-02-20T12:58:19.322Z",
+      "NM": "2022-12-20T12:58:19.322Z",
       "OR": "2022-08-20T12:58:19.322Z",
       "OR_file": "2022-08-20T12:58:19.322Z",
       "leaser_and_borrower_file": "2022-08-20T12:58:19.322Z",
@@ -140,7 +131,6 @@ class StubOptionService implements OptionService {
 
   @override
   Future<String> getFile(String query, String dummy) {
-    // TODO: implement getFile
     throw UnimplementedError();
   }
 }

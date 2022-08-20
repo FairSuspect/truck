@@ -13,8 +13,9 @@ class OilStatusProvider {
 
     try {
       await sendMileage(mileage);
+    } finally {
       mileageTextController.clear();
-    } catch (e) {}
+    }
   }
 
   Future<void> sendMileage(int value) async {

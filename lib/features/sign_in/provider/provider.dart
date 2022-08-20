@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:truck/features/sign_in/models/credentials.dart';
@@ -42,7 +43,7 @@ class SignInProvider extends ChangeNotifier {
       Credentials(mail: driverId, password: truckId),
     );
     if (auth.isEmpty) {
-      print("failed");
+      Logger('Auth').log(Level.WARNING, "Failed to auth");
       return;
     }
     final prefs = await SharedPreferences.getInstance();
@@ -71,10 +72,10 @@ class SignInProvider extends ChangeNotifier {
 
   Future<void> _showNotification() async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
+        AndroidNotificationDetails('truckMileage', 'Truck mileage reminder',
+            channelDescription: 'Remind to send mileage every week',
+            importance: Importance.defaultImportance,
+            priority: Priority.defaultPriority,
             ticker: 'ticker');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);

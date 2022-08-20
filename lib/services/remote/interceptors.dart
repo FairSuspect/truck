@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truck/features/shared/view/snackbars.dart';
 import 'package:truck/features/sign_in/sign_in.dart';
 import 'package:truck/services/navigation.dart';
 

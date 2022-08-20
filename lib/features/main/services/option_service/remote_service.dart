@@ -6,19 +6,6 @@ import 'package:truck/features/main/services/option_service/option_service.dart'
 import 'package:truck/services/remote/api.dart';
 
 class RemoteOptionService implements OptionService {
-  static const _names = [
-    'truck_registration_file',
-    'truck_inspection_file',
-    'physical_damage_file',
-    "NY_file",
-    "KY_file",
-    "NM_file",
-    "OR_file",
-    'leaser_and_borrower_file',
-    'driver_and_company_file',
-    'random_drug_test_expiration_file',
-  ];
-
   @override
   Future<Map<String, List<Option>>> getAll() async {
     final response = await Api().dio.get(

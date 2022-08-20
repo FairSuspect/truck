@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:truck/features/doc_option/view/doc_option_screen.dart';
 import 'package:truck/features/main/provider/option_provider.dart';
 import 'package:truck/features/main/view/error_card.dart';
 import 'package:truck/features/main/view/option_tile.dart';
@@ -9,8 +8,6 @@ import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
 import 'package:truck/features/oil_status/view/oil_status_page.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
-import 'package:truck/features/shared/view/snackbars.dart';
-import 'package:truck/services/navigation.dart';
 
 import '../provider/provider.dart';
 import '../provider/user_provider.dart';
@@ -122,7 +119,6 @@ class _MainScreenPage extends StatelessWidget {
 
 class _FilterChip extends StatelessWidget {
   const _FilterChip({
-    super.key,
     required this.title,
     this.isSelected = false,
     this.onTap,
