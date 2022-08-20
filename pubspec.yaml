@@ -46,7 +46,7 @@ dependencies:
   flutter_pdfview: ^1.2.1
   path_provider: ^2.0.11
   logging: ^1.0.2
-  flutter_downloader: ^1.8.3
+  open_file: ^3.2.1
 
 dev_dependencies:
   flutter_test:

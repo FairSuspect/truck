@@ -12,10 +12,6 @@ class AppInterceptors extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    Navigation()
-        .scaffoldKey
-        .currentState!
-        .showSnackBar(SnackBars.info("Got response"));
     super.onResponse(response, handler);
   }
 

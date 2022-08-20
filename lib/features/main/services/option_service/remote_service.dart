@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:logging/logging.dart';
 import 'package:truck/features/main/models/option.dart';
 import 'package:truck/features/main/services/option_service/option_service.dart';
 import 'package:truck/services/remote/api.dart';
@@ -115,14 +118,28 @@ class RemoteOptionService implements OptionService {
   }
 
   @override
-  Future<String> getFile(String query) async {
-    return 'https://roskazna.gov.ru/anticorruption/doc/prikaz_k.pdf';
-    final response = await Api().dio.get(
+  Future<String> getFile(String query, String path) async {
+    final filePath = "$path/$query";
+    final logger = Logger("Downloader");
+    logger.log(Level.INFO, "Craeting file $filePath");
+    final response = await Api().dio.download(
       '/driver/get_truck_file/',
+      filePath,
       queryParameters: {
         'filename': query,
       },
     );
-    return response.data;
+    logger.log(Level.INFO, "Headers: ${response.headers}");
+    final dest = response.headers.map['content-disposition'];
+    final content = dest?.first ?? '';
+    String fileName =
+        content.substring(content.indexOf('"') + 1, content.lastIndexOf('"'));
+    fileName = fileName.split('/').last;
+    final newFilePath = "$path/$fileName";
+    logger.log(Level.INFO, "file path from dio: $newFilePath");
+    await File(newFilePath).create();
+    await File(filePath).copy(newFilePath);
+    await File(filePath).delete();
+    return newFilePath;
   }
 }

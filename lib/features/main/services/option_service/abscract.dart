@@ -4,5 +4,5 @@ abstract class OptionService {
   /// Возвращает весь список Option
   Future<Map<String, List<Option>>> getAll();
 
-  Future<String> getFile(String query);
+  Future<String> getFile(String query, String path);
 }

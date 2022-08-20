@@ -139,7 +139,7 @@ class StubOptionService implements OptionService {
   }
 
   @override
-  Future<String> getFile(String query) {
+  Future<String> getFile(String query, String dummy) {
     // TODO: implement getFile
     throw UnimplementedError();
   }
