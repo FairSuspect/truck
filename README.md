@@ -3,8 +3,7 @@
 ## Build
 - Install [Flutter](https://docs.flutter.dev/get-started/install)
 - Clone repo
-To make sure the flutter installed run
-- run `flutter doctor -v`
+- run `flutter doctor -v` to check if there are any issues with your platforms
 - `flutter pub get` to install dependencies
 - `flutter pub run build_runner build --delete-conflicting-outputs` to generate files
 - `flutter run` or start debug session in your IDE
