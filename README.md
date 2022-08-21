@@ -6,6 +6,7 @@
 - run `flutter doctor -v` to check if there are any issues with your platforms
 - `flutter pub get` to install dependencies
 - `flutter pub run build_runner build --delete-conflicting-outputs` to generate files
+- create `.env` file with one line `DOMAIN=https://your_domain_here.com`
 - `flutter run` or start debug session in your IDE
 
 
