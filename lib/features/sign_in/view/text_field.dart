@@ -7,7 +7,7 @@ class OutlinedTextField extends StatefulWidget {
     this.onSaved,
     required this.label,
     this.onChanged,
-    this.keyboardType = TextInputType.number,
+    this.keyboardType = TextInputType.text,
     this.controller,
   });
   final ValueChanged<String?>? onSaved;
