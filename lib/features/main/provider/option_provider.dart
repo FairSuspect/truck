@@ -52,7 +52,9 @@ class OptionProvider extends ChangeNotifier {
   }
 
   List<String> get filters => options.keys.toList();
-  List<Option> get filteredOptions => options[filter] ?? [];
+  List<Option> get filteredOptions =>
+      options[filter]?.where((element) => element.deadline != null).toList() ??
+      [];
 
   @override
   void dispose() {
