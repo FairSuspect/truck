@@ -28,6 +28,7 @@ Future<void> main() async {
     // ignore: avoid_print
     print('[${record.loggerName}] (${record.time}): ${record.message}');
   });
+  await Future.delayed(Duration(seconds: 3));
 
   final hasToken = await checkAuth();
   final initialRoute = hasToken ? MainScreen.routeName : SignInScreen.routeName;
