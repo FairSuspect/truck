@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:truck/features/contact/view/contact_screen.dart';
 import 'package:truck/features/main/provider/option_provider.dart';
 import 'package:truck/features/main/view/error_card.dart';
 import 'package:truck/features/main/view/option_tile.dart';
@@ -51,6 +52,7 @@ class _MainScreenState extends State<MainScreen> {
           _MainScreenPage(),
           QrCodePage(),
           OilStatusPage(),
+          ContactScreen(),
         ],
       ),
       bottomNavigationBar: MainNavBar(
