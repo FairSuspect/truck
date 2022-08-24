@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:truck/features/main/models/option.dart';
 import 'package:truck/features/main/provider/option_provider.dart';
+import 'package:truck/services/theme/light_theme.dart';
 
 class OptionTile extends StatelessWidget {
   const OptionTile({
@@ -49,13 +51,8 @@ class OptionTile extends StatelessWidget {
                     const SizedBox(height: 4),
                     if (option.deadline != null && option.dateCreated != null)
                       _DeadlineProgress(
-                        progress: DateTime.now()
-                            .difference(option.dateCreated!)
-                            .inDays,
-                        total: option.deadline!
-                            .difference(option.dateCreated!)
-                            .inDays,
-                      )
+                          remainingTime:
+                              option.deadline!.difference(DateTime.now()))
                   ],
                 ),
               ),
@@ -68,20 +65,18 @@ class OptionTile extends StatelessWidget {
 }
 
 class _DeadlineProgress extends StatelessWidget {
-  const _DeadlineProgress({
-    required this.progress,
-    required this.total,
-  });
-  final int progress;
-  final int total;
+  const _DeadlineProgress({required this.remainingTime});
+  final Duration remainingTime;
+  RemainingTimeIndicator get remainingTimeIndicator =>
+      RemainingTimeIndicator.fromDuration(remainingTime);
 
-  bool get overdue => progress > total;
-
-  int get days => (total - progress).toInt();
+  int get days => remainingTime.inDays;
+  bool get overdue => remainingTime.isNegative;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final double barProgress = progress == total ? 1 : progress / total;
+    const aLotOfDays = 30;
+    final double barProgress = days >= aLotOfDays ? 1 : days / aLotOfDays;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -96,7 +91,7 @@ class _DeadlineProgress extends StatelessWidget {
                   color: theme.colorScheme.secondary,
                 ),
               )
-            : Text("$days days left",
+            : Text("$days day${days != 1 ? 's' : ''} left",
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.primaryColor))
       ],
@@ -112,18 +107,49 @@ class _ProgressBar extends StatelessWidget {
 
   final double progress;
   static const double width = 96;
-  bool get overdue => progress > 1;
+  bool get overdue => progress < 0;
+  Color colorByProgress(TimeIndicatorColors colors, double progress) {
+    assert(!progress.isNegative);
+    late final Color firstColor;
+    late final Color secondColor;
+    if (progress >= 1) {
+      return colors.moreThanMonth;
+    } else if (progress >= 0.7) {
+      firstColor = colors.moreThanMonth;
+      secondColor = colors.threeQuarters;
+    } else if (progress >= .6) {
+      firstColor = colors.threeQuarters;
+      secondColor = colors.half;
+    } else if (progress >= .25) {
+      firstColor = colors.half;
+      secondColor = colors.quarter;
+    } else if (progress >= 0) {
+      firstColor = colors.quarter;
+      secondColor = colors.zero;
+    }
+    return Color.lerp(firstColor, secondColor, progress)!;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final progressWidth = width * progress;
+    final double safeProgress = progress.isNegative ? 0 : progress;
+    final double progressWidth = width * safeProgress;
+    final color =
+        colorByProgress(theme.extension<TimeIndicatorColors>()!, safeProgress);
+    Logger("Tile Render")
+        .log(Level.INFO, "Got color $color with progress $safeProgress");
     return Stack(
       children: [
         Container(
           height: 8,
           decoration: BoxDecoration(
-              color: theme.primaryColor.withOpacity(.08),
+              color: progress.isNegative
+                  ? theme.errorColor.withOpacity(.08)
+                  : color.withOpacity(.08),
+              border: progress.isNegative
+                  ? Border.all(color: theme.errorColor)
+                  : null,
               borderRadius: const BorderRadius.all(Radius.circular(8))),
           width: width,
         ),
@@ -131,7 +157,7 @@ class _ProgressBar extends StatelessWidget {
           height: 8,
           width: progressWidth > width ? width : progressWidth,
           decoration: BoxDecoration(
-              color: overdue ? theme.colorScheme.secondary : theme.primaryColor,
+              color: overdue ? theme.colorScheme.secondary : color,
               borderRadius: const BorderRadius.all(Radius.circular(8))),
         ),
       ],
@@ -155,5 +181,28 @@ class DocumentIcon extends StatelessWidget {
             ? CircularProgressIndicator(value: progress)
             : SvgPicture.asset('assets/icons/document_outline.svg',
                 height: 56));
+  }
+}
+
+enum RemainingTimeIndicator {
+  moreThanMonth(1000),
+  aboutMonth(29),
+  lessTwoWeeks(14),
+  lessThreeDays(3);
+
+  final int remainingDays;
+  const RemainingTimeIndicator(this.remainingDays);
+  factory RemainingTimeIndicator.fromDuration(Duration duration) {
+    final int days = duration.inDays;
+    if (days > aboutMonth.remainingDays) {
+      return RemainingTimeIndicator.moreThanMonth;
+    }
+    if (days > lessTwoWeeks.remainingDays) {
+      return RemainingTimeIndicator.aboutMonth;
+    }
+    if (days > lessThreeDays.remainingDays) {
+      return RemainingTimeIndicator.lessTwoWeeks;
+    }
+    return RemainingTimeIndicator.lessThreeDays;
   }
 }
