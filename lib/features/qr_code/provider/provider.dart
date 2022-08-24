@@ -3,9 +3,7 @@ import 'package:truck/features/qr_code/modes/qr.dart';
 import 'package:truck/features/qr_code/services/abstract.dart';
 
 class QrCodeProvider extends ChangeNotifier {
-  Qr qr = Qr(
-      data: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      due: DateTime.now().add(const Duration(minutes: 15)));
+  Qr? qr;
 
   final QrCodeService service;
   bool _isLoading = true;
@@ -32,5 +30,6 @@ class QrCodeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get minutesRemaining => qr.due.difference(DateTime.now()).inMinutes;
+  int get minutesRemaining =>
+      qr?.due.difference(DateTime.now()).inMinutes ?? 15;
 }

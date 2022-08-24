@@ -8,7 +8,7 @@ class DioFactory {
   static Dio createDio() {
     final dio = Dio(
       BaseOptions(
-        baseUrl: dotenv.env["DOMAIN"]!,
+        baseUrl: dotenv.env["API_DOMAIN"] ?? dotenv.env["DOMAIN"]!,
         receiveTimeout: 15000, // 15 seconds
         connectTimeout: 15000,
         sendTimeout: 15000,

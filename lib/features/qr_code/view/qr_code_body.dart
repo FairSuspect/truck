@@ -24,10 +24,31 @@ class QrCodeBody extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const CircularProgressIndicator(),
                 )
-              : QrImage(
-                  data: controller.qr.data,
-                  size: qrWidth,
-                );
+              : controller.qr == null
+                  ? const _QrCodeErrorWidget(qrWidth: qrWidth)
+                  : QrImage(
+                      data: controller.qr!.data,
+                      size: qrWidth,
+                    );
         }));
+  }
+}
+
+class _QrCodeErrorWidget extends StatelessWidget {
+  const _QrCodeErrorWidget({
+    Key? key,
+    required this.qrWidth,
+  }) : super(key: key);
+
+  final double qrWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: qrWidth,
+        height: qrWidth,
+        child: const Center(
+          child: Text("Failed to generate QR Code. Please, try again"),
+        ));
   }
 }
