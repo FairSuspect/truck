@@ -108,18 +108,6 @@ class _ProgressBar extends StatelessWidget {
   final double progress;
   static const double width = 96;
   bool get overdue => progress < 0;
-  Color colorByProgress(TimeIndicatorColors colors, double progress) {
-    if (progress >= 1) {
-      return colors.moreThanMonth;
-    } else if (progress >= 0.75) {
-      return colors.threeQuarters;
-    } else if (progress >= .5) {
-      return colors.half;
-    } else if (progress >= .25) {
-      return colors.quarter;
-    }
-    return colors.zero;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,4 +184,17 @@ enum RemainingTimeIndicator {
     }
     return RemainingTimeIndicator.lessThreeDays;
   }
+}
+
+Color colorByProgress(TimeIndicatorColors colors, double progress) {
+  if (progress >= 1) {
+    return colors.moreThanMonth;
+  } else if (progress >= 0.75) {
+    return colors.threeQuarters;
+  } else if (progress >= .5) {
+    return colors.half;
+  } else if (progress >= .25) {
+    return colors.quarter;
+  }
+  return colors.zero;
 }

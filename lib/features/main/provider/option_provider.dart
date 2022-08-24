@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,8 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:truck/features/main/models/option.dart';
 import 'package:truck/features/main/services/option_service/abscract.dart';
+import 'package:truck/features/main/view/option_tile.dart';
+import 'package:truck/services/theme/light_theme.dart';
 
 class OptionProvider extends ChangeNotifier {
   final OptionService service;
@@ -53,8 +56,14 @@ class OptionProvider extends ChangeNotifier {
 
   List<String> get filters => options.keys.toList();
 
-  bool filterHasNotification(String filter) =>
-      options[filter]!.where((element) => element.hasOverdue).isNotEmpty;
+  Color? filterNotificationColor(String filter, TimeIndicatorColors colors) {
+    final progresses = options[filter]!.map((e) => e.progress).toList();
+    final leastProgress = progresses.reduce(min);
+
+    final color = colorByProgress(colors, leastProgress);
+    return color == colors.moreThanMonth ? null : color;
+  }
+
   List<Option> get filteredOptions =>
       options[filter]?.where((element) => element.deadline != null).toList() ??
       [];
@@ -87,4 +96,11 @@ class OptionProvider extends ChangeNotifier {
 extension OverdueOption on Option {
   bool get hasOverdue =>
       deadline != null ? DateTime.now().isAfter(deadline!) : false;
+  static const aLotOfDays = 30;
+  double get progress {
+    if (hasOverdue) return 0;
+    if (deadline == null) return double.infinity;
+    var inDays = deadline!.difference(DateTime.now()).inDays;
+    return inDays > aLotOfDays ? 1 : inDays / 30;
+  }
 }

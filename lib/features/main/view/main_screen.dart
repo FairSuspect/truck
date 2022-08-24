@@ -9,6 +9,7 @@ import 'package:truck/features/oil_status/view/oil_status_app_bar.dart';
 import 'package:truck/features/oil_status/view/oil_status_page.dart';
 import 'package:truck/features/qr_code/qr_code.dart';
 import 'package:truck/features/qr_code/view/qr_code_app_bar.dart';
+import 'package:truck/services/theme/light_theme.dart';
 
 import '../provider/provider.dart';
 import '../provider/user_provider.dart';
@@ -89,8 +90,11 @@ class _MainScreenPage extends StatelessWidget {
                           itemCount: controller.filters.length,
                           itemBuilder: (context, index) => _FilterChip(
                             title: controller.filters[index],
-                            hasNotification: controller.filterHasNotification(
-                                controller.filters[index]),
+                            notificationColor:
+                                controller.filterNotificationColor(
+                                    controller.filters[index],
+                                    Theme.of(context)
+                                        .extension<TimeIndicatorColors>()!),
                             isSelected:
                                 controller.filters[index] == controller.filter,
                             onTap: controller.onFilterSelected,
@@ -133,12 +137,12 @@ class _FilterChip extends StatelessWidget {
     required this.title,
     this.isSelected = false,
     this.onTap,
-    this.hasNotification = false,
+    this.notificationColor,
   });
   final String title;
   final bool isSelected;
   final ValueChanged<String>? onTap;
-  final bool hasNotification;
+  final Color? notificationColor;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -166,17 +170,29 @@ class _FilterChip extends StatelessWidget {
                 ),
               )),
             ),
-            if (hasNotification)
-              Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: const BorderRadius.all(Radius.circular(4))),
-              )
+            if (notificationColor != null)
+              NotificationDot(color: notificationColor!)
           ],
         ),
       ),
+    );
+  }
+}
+
+class NotificationDot extends StatelessWidget {
+  const NotificationDot({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
+  final Color color;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.all(Radius.circular(4))),
     );
   }
 }
@@ -217,4 +233,17 @@ class _AppBarTitle extends StatelessWidget {
             );
     });
   }
+}
+
+Color colorByProgress(TimeIndicatorColors colors, double progress) {
+  if (progress >= 1) {
+    return colors.moreThanMonth;
+  } else if (progress >= 0.75) {
+    return colors.threeQuarters;
+  } else if (progress >= .5) {
+    return colors.half;
+  } else if (progress >= .25) {
+    return colors.quarter;
+  }
+  return colors.zero;
 }
