@@ -109,25 +109,16 @@ class _ProgressBar extends StatelessWidget {
   static const double width = 96;
   bool get overdue => progress < 0;
   Color colorByProgress(TimeIndicatorColors colors, double progress) {
-    assert(!progress.isNegative);
-    late final Color firstColor;
-    late final Color secondColor;
     if (progress >= 1) {
       return colors.moreThanMonth;
-    } else if (progress >= 0.7) {
-      firstColor = colors.moreThanMonth;
-      secondColor = colors.threeQuarters;
-    } else if (progress >= .6) {
-      firstColor = colors.threeQuarters;
-      secondColor = colors.half;
+    } else if (progress >= 0.75) {
+      return colors.threeQuarters;
+    } else if (progress >= .5) {
+      return colors.half;
     } else if (progress >= .25) {
-      firstColor = colors.half;
-      secondColor = colors.quarter;
-    } else if (progress >= 0) {
-      firstColor = colors.quarter;
-      secondColor = colors.zero;
+      return colors.quarter;
     }
-    return Color.lerp(firstColor, secondColor, progress)!;
+    return colors.zero;
   }
 
   @override
