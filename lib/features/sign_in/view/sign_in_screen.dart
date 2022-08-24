@@ -14,42 +14,38 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 34.0, 16.0, 58.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Logo(),
-              const SizedBox(height: 66),
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Log in",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  )),
-              const SizedBox(height: 32),
-              OutlinedTextField(
-                onChanged: Provider.of<SignInProvider>(context, listen: false)
-                    .onDriverIdChanged,
-                label: "Driver #",
-              ),
-              const SizedBox(height: 36),
-              OutlinedTextField(
-                onChanged: Provider.of<SignInProvider>(context, listen: false)
-                    .onTruckIdChanged,
-                label: "Truck #",
-              ),
-              const Spacer(),
-              Consumer<SignInProvider>(
-                builder: (context, controller, child) {
-                  return PrimaryButton(
-                    onPressed: controller.onLogInPressed,
-                    child: child!,
-                  );
-                },
-                child: const Text("Log in"),
-              ),
-            ],
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 34.0, 16.0, 58.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 32),
+                const Logo(),
+                const SizedBox(height: 32),
+                OutlinedTextField(
+                  onChanged: Provider.of<SignInProvider>(context, listen: false)
+                      .onDriverIdChanged,
+                  label: "Truck VIN",
+                ),
+                const SizedBox(height: 36),
+                OutlinedTextField(
+                  onChanged: Provider.of<SignInProvider>(context, listen: false)
+                      .onTruckIdChanged,
+                  label: "Password",
+                ),
+                const Spacer(),
+                Consumer<SignInProvider>(
+                  builder: (context, controller, child) {
+                    return PrimaryButton(
+                      onPressed: controller.onLogInPressed,
+                      child: child!,
+                    );
+                  },
+                  child: const Text("Log in"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
