@@ -1,12 +1,16 @@
 # How to build and publish
 
-## Build
+## Build 
 - Install [Flutter](https://docs.flutter.dev/get-started/install)
 - Clone repo
 - run `flutter doctor -v` to check if there are any issues with your platforms
 - `flutter pub get` to install dependencies
 - `flutter pub run build_runner build --delete-conflicting-outputs` to generate files
-- create `.env` file with one line `DOMAIN=https://your_domain_here.com`
+- create `.env` file with two lines **(new)**
+```
+DOMAIN=https://your_domain_here.com
+API_DOMAIN=https://your_api_domain.com
+```
 - `flutter run` or start debug session in your IDE
 
 
