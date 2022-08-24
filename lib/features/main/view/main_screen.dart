@@ -84,8 +84,8 @@ class _MainScreenPage extends StatelessWidget {
                 : Column(
                     children: [
                       SizedBox(
-                        height: 46,
-                        child: ListView.builder(
+                        height: 46 * 2 + 10,
+                        child: GridView.builder(
                           itemCount: controller.filters.length,
                           itemBuilder: (context, index) => _FilterChip(
                             title: controller.filters[index],
@@ -93,10 +93,16 @@ class _MainScreenPage extends StatelessWidget {
                                 controller.filters[index] == controller.filter,
                             onTap: controller.onFilterSelected,
                           ),
-                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisExtent: 46,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       Expanded(
                         child: ListView.builder(
                           itemCount: controller.filteredOptions.length,
@@ -110,6 +116,7 @@ class _MainScreenPage extends StatelessWidget {
                               option: controller.filteredOptions[index],
                             ),
                           ),
+                          physics: const BouncingScrollPhysics(),
                         ),
                       ),
                     ],
@@ -131,14 +138,14 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
         onTap: () {
           onTap?.call(title);
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          height: 46,
           decoration: BoxDecoration(
             color: isSelected ? theme.cardColor : const Color(0xFFF7F8FA),
             borderRadius: const BorderRadius.all(Radius.circular(16.0)),
