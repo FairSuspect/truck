@@ -52,6 +52,9 @@ class OptionProvider extends ChangeNotifier {
   }
 
   List<String> get filters => options.keys.toList();
+
+  bool filterHasNotification(String filter) =>
+      options[filter]!.where((element) => element.hasOverdue).isNotEmpty;
   List<Option> get filteredOptions =>
       options[filter]?.where((element) => element.deadline != null).toList() ??
       [];
@@ -79,4 +82,9 @@ class OptionProvider extends ChangeNotifier {
 
     return dir!.path;
   }
+}
+
+extension OverdueOption on Option {
+  bool get hasOverdue =>
+      deadline != null ? DateTime.now().isAfter(deadline!) : false;
 }

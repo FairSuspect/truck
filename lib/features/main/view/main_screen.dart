@@ -89,6 +89,8 @@ class _MainScreenPage extends StatelessWidget {
                           itemCount: controller.filters.length,
                           itemBuilder: (context, index) => _FilterChip(
                             title: controller.filters[index],
+                            hasNotification: controller.filterHasNotification(
+                                controller.filters[index]),
                             isSelected:
                                 controller.filters[index] == controller.filter,
                             onTap: controller.onFilterSelected,
@@ -131,10 +133,12 @@ class _FilterChip extends StatelessWidget {
     required this.title,
     this.isSelected = false,
     this.onTap,
+    this.hasNotification = false,
   });
   final String title;
   final bool isSelected;
   final ValueChanged<String>? onTap;
+  final bool hasNotification;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -144,21 +148,33 @@ class _FilterChip extends StatelessWidget {
         onTap: () {
           onTap?.call(title);
         },
-        child: Container(
-          height: 46,
-          decoration: BoxDecoration(
-            color: isSelected ? theme.cardColor : const Color(0xFFF7F8FA),
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-          ),
-          child: Center(
-              child: Text(
-            title,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: isSelected
-                  ? const Color(0xFF4E5467)
-                  : const Color(0xFF858DA6),
+        child: Stack(
+          children: [
+            Container(
+              height: 46,
+              decoration: BoxDecoration(
+                color: isSelected ? theme.cardColor : const Color(0xFFF7F8FA),
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              ),
+              child: Center(
+                  child: Text(
+                title,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isSelected
+                      ? const Color(0xFF4E5467)
+                      : const Color(0xFF858DA6),
+                ),
+              )),
             ),
-          )),
+            if (hasNotification)
+              Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: const BorderRadius.all(Radius.circular(4))),
+              )
+          ],
         ),
       ),
     );
