@@ -73,7 +73,8 @@ class MyApp extends StatelessWidget {
           default:
             builder = (context) => MultiProvider(providers: [
                   ChangeNotifierProvider(
-                      create: (context) => OptionProvider(StubOptionService())),
+                      create: (context) =>
+                          OptionProvider(RemoteOptionService())),
                   ChangeNotifierProvider(
                       create: (context) => UserProvider(RemoteUserService())),
                   ChangeNotifierProvider(

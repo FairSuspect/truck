@@ -5,6 +5,14 @@ class OilStatusAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Oil status");
+    return RichText(
+        text: TextSpan(
+            style: Theme.of(context).appBarTheme.titleTextStyle,
+            children: [
+          const TextSpan(text: 'Oil status'),
+          TextSpan(
+              text: " (Work in Progress)",
+              style: TextStyle(color: Theme.of(context).errorColor))
+        ]));
   }
 }
