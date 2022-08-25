@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:truck/features/shared/view/snackbars.dart';
 import 'package:truck/features/sign_in/models/credentials.dart';
 import 'package:truck/features/sign_in/services/auth_service/auth_service.dart';
 import 'package:truck/features/main/view/main_screen.dart';
@@ -39,11 +41,22 @@ class SignInProvider extends ChangeNotifier {
   VoidCallback? get onLogInPressed => buttonAvailable ? logIn : null;
 
   Future<void> logIn() async {
-    final auth = await service.signIn(
-      Credentials(mail: driverId, password: truckId),
-    );
-    if (auth.isEmpty) {
-      Logger('Auth').log(Level.WARNING, "Failed to auth");
+    late final String auth;
+    try {
+      auth = await service.signIn(
+        Credentials(mail: driverId, password: truckId),
+      );
+      if (auth.isEmpty) {
+        Logger('Auth').log(Level.WARNING, "Failed to auth");
+        return;
+      }
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Navigation().scaffoldKey.currentState!.showSnackBar(SnackBars.info(
+            e.response?.data['detail'] ?? "Incorrect email or password"));
+      }
+      Logger('Auth').log(Level.WARNING, "Remote reported failt auth");
+
       return;
     }
     final prefs = await SharedPreferences.getInstance();

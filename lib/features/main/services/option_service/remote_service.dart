@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 import 'package:truck/features/main/models/option.dart';
 import 'package:truck/features/main/services/option_service/option_service.dart';
+import 'package:truck/features/shared/view/snackbars.dart';
+import 'package:truck/services/navigation.dart';
 import 'package:truck/services/remote/api.dart';
 
 class RemoteOptionService implements OptionService {
@@ -109,24 +112,39 @@ class RemoteOptionService implements OptionService {
     final filePath = "$path/$query";
     final logger = Logger("Downloader");
     logger.log(Level.INFO, "Craeting file $filePath");
-    final response = await Api().dio.download(
-      '/driver/get_truck_file/',
-      filePath,
-      queryParameters: {
-        'filename': query,
-      },
-    );
-    logger.log(Level.INFO, "Headers: ${response.headers}");
-    final dest = response.headers.map['content-disposition'];
-    final content = dest?.first ?? '';
-    String fileName =
-        content.substring(content.indexOf('"') + 1, content.lastIndexOf('"'));
-    fileName = fileName.split('/').last;
-    final newFilePath = "$path/$fileName";
-    logger.log(Level.INFO, "file path from dio: $newFilePath");
-    await File(newFilePath).create();
-    await File(filePath).copy(newFilePath);
-    await File(filePath).delete();
-    return newFilePath;
+    try {
+      final response = await Api().dio.download(
+        '/driver/get_truck_file/',
+        filePath,
+        queryParameters: {
+          'filename': query,
+        },
+      );
+      logger.log(Level.INFO, "Headers: ${response.headers}");
+      final dest = response.headers.map['content-disposition'];
+      final content = dest?.first ?? '';
+      String fileName =
+          content.substring(content.indexOf('"') + 1, content.lastIndexOf('"'));
+      fileName = fileName.split('/').last;
+      final newFilePath = "$path/$fileName";
+      logger.log(Level.INFO, "file path from dio: $newFilePath");
+      await File(newFilePath).create();
+      await File(filePath).copy(newFilePath);
+      await File(filePath).delete();
+      return newFilePath;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 404) {
+        Navigation()
+            .scaffoldKey
+            .currentState!
+            .showSnackBar(SnackBars.info("File not found"));
+        return '';
+      }
+      Navigation()
+          .scaffoldKey
+          .currentState!
+          .showSnackBar(SnackBars.info("Unknown server error"));
+      return '';
+    }
   }
 }

@@ -116,8 +116,7 @@ class _ProgressBar extends StatelessWidget {
     final double progressWidth = width * safeProgress;
     final color =
         colorByProgress(theme.extension<TimeIndicatorColors>()!, safeProgress);
-    Logger("Tile Render")
-        .log(Level.INFO, "Got color $color with progress $safeProgress");
+
     return Stack(
       children: [
         Container(

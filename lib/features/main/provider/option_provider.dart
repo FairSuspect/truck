@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:truck/features/main/models/option.dart';
 import 'package:truck/features/main/services/option_service/abscract.dart';
 import 'package:truck/features/main/view/option_tile.dart';
+import 'package:truck/features/shared/view/snackbars.dart';
+import 'package:truck/services/navigation.dart';
 import 'package:truck/services/theme/light_theme.dart';
 
 class OptionProvider extends ChangeNotifier {
@@ -79,6 +81,18 @@ class OptionProvider extends ChangeNotifier {
     final filePath = await service.getFile(key, path);
     final result = await OpenFile.open(filePath);
     Logger("OpenFile").log(Level.INFO, "${result.type}: ${result.message}");
+    if (result.type == ResultType.error) {
+      Navigation()
+          .scaffoldKey
+          .currentState
+          ?.showSnackBar(SnackBars.info("Unkonwn error while openning file"));
+    } else if (result.type == ResultType.noAppToOpen) {
+      Navigation().scaffoldKey.currentState?.showSnackBar(
+          SnackBars.info("No application found to open this file"));
+    } else if (result.type == ResultType.fileNotFound) {
+      Navigation().scaffoldKey.currentState?.showSnackBar(SnackBars.info(
+          "File is lost. make sure that this file has extension"));
+    }
   }
 
   Future<String> _getPath() async {
