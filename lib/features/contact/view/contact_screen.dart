@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -13,11 +10,15 @@ class ContactScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
-          SelectableText('founders@docksys.co'),
-          Text("Contact Us"),
-          Text("Corporate headquarters:"),
-          SelectableText(
-              '11 Merry Lane NP0000000000 New Jersey, East Hanover, 00000')
+          Text("Contact Us",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          SelectableText('founders@docksys.co', style: TextStyle(fontSize: 20)),
+          Text("Corporate Address:",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          SelectableText('335010 Georgia Tech Station',
+              style: TextStyle(fontSize: 20)),
+          SelectableText('351 Ferst Drive', style: TextStyle(fontSize: 20)),
+          SelectableText('Atlanta, GA 30332', style: TextStyle(fontSize: 20))
         ],
       ),
     );
